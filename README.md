@@ -10,52 +10,60 @@ Segregation into different types of cards is based on the first character of the
 - $ or (shift + 3) for step-by-step events cards (special card types I made; explained later, not yet implemented)
 - % or (shift + 4) for residue cards (incomplete cards without an answer yet; you don't want to add those to your decks!)
 
+-----
+
 This is how basic card text looks like before running the program:
 > What is the capital of X? Y 
 
 This is what the card looks like after
 - (front) What is the capital of X?
-- (back) Y
+-- (back) Y
     
+-----
+
 This is how reversible card text looks like before running the program:
 
 > !What is the capital of X country? capital: Y
 
 This is what the 2 cards looks like after
  - (front) What is the capital of X country?
- - (back) capital: Y
+ -- (back) capital: Y
  
- * (back) capital: Y
- * (front) What is the capital of X country?
+ * (front) capital: Y
+ ** (back) What is the capital of X country?
+
+-----
 
 This is how cloze deletion card text looks like before running the program:
 > @What are the cities found in X? A, B, C
 
 This is what the 3 cards looks like after
 - (front) What are the cities found in X? _, B, C
-- (back) What are the cities found in X? A, B, C
+-- (back) What are the cities found in X? A, B, C
 
 * (front) What are the cities found in X? A, _, C
-* (back) What are the cities found in X? A, B, C
+** (back) What are the cities found in X? A, B, C
 
 - (front) What are the cities found in X? A, B, _
-- (back) What are the cities found in X? A, B, C
+-- (back) What are the cities found in X? A, B, C
  
+-----
+
 This is how step-by-step card text looks like before running the program:
 > $stage of Event X? (1) ABC, (2) one-two-three, (3) do-re-mi, (4) you-and-me
 
 This is what the 3 cards looks like after
 - (front) What is the first or #1 stage of Event X that comes before do-re-mi?
-- (back) ABC
+-- (back) ABC
 
 * (front) What is the #2 stage of Event X that comes after (1) ABC and before (3) do-re-mi?
-* (back) one-two-three
+** (back) one-two-three
 
 - (front) What is the #3 stage of Event X that comes after (2) one-two-three and before (4) you-and-me?
-- (back) do-re-mi
+-- (back) do-re-mi
 
 * (front) What is the last or #4 stage of Event X that comes after (3) do-re-mi?
-* (back) you-and-me
+** (back) you-and-me
 
 ### Version
 1.0.0
