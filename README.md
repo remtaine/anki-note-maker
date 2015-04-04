@@ -8,6 +8,7 @@ Segregation into different types of cards is based on the first character of the
 - ! or (shift + 1) for [reversible] cards
 - \# or (shift + 2) for [cloze deletion] cards
 - $ or (shift + 3) for step-by-step events cards (special card types I made; explained later, not yet implemented)
+- % or (shift + 4) for residue cards (incomplete cards without an answer yet; you don't want to add those to your decks!)
 
 This is how basic card text looks like before running the program:
 > What is the capital of X? Y 
