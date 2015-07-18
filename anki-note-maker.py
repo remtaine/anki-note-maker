@@ -1,4 +1,4 @@
-#!usr/bin/env python
+#!venv/bin python2.7
 import time
 import os
 import sys
@@ -21,7 +21,7 @@ today = time.strftime("%Y-%m-%d")
 if len(args) == 2:
 	file_name = args[1];	
 else:
-	file_name = raw_input("what should I open? ")
+	file_name = raw_input("What should be opened? ")
 
 file_to_open = open(file_name, 'r')
 
@@ -63,7 +63,6 @@ csv_cloze.write("tags:" + text_lines[0])
 csv_events.write("tags:" + text_lines[0])
 csv_residue.write("tags:" + text_lines[0])
 
-#TODO support commenting
 for line in text_lines[1:]:
 	question_parts = line.split('?')
 	if len(question_parts) != 2: 
@@ -87,52 +86,65 @@ for line in text_lines[1:]:
 	elif line[0] == "@":
 	#cloze 
 	#shift + 2
-		question_parts[0] = question_parts[0][1:]
+	#TODO add a space between question and answers
+		if line[-2:] == "@@":
+			#TODO support multiline question
+			#keep adding cloze answers one line at a time
+			# until the next @@
+			pass	
+		else:
+			question_parts[0] = question_parts[0][1:]
 
-		#cloze deletion needs special shiz
-		cloze_answers = question_parts[1].split(ANSWER_SPLITTER)
-		cloze_answers[-1] = cloze_answers[-1].rstrip()
-		for i in xrange (0,len(cloze_answers)):
-			x = i + 1
-			cloze_answers[i] = r"{{c" + str(x) + r"::" + cloze_answers[i] + r"}}"
-		lineup = question_parts[0] + ": "
-		for i in xrange (0,len(cloze_answers)):
-			lineup = lineup + cloze_answers[i]
-		lineup = lineup + "\n"
-		csv_cloze.write(lineup)
+			#cloze deletion needs special shiz
+			cloze_answers = question_parts[1].split(ANSWER_SPLITTER)
+			cloze_answers[-1] = cloze_answers[-1].rstrip()
+			for i in xrange (0,len(cloze_answers)):
+				x = i + 1
+				cloze_answers[i] = r"{{c" + str(x) + r"::" + cloze_answers[i] + r"}}"
+			lineup = question_parts[0] + "; " #will be Text
+			for i in xrange (0,len(cloze_answers)):
+				lineup = lineup + cloze_answers[i]
+			lineup = lineup + "\n"
+			csv_cloze.write(lineup)
 
 	elif line[0] == "#":
 	#step-by-step event
 	#shift + 3
-		question_parts[0] = question_parts[0][1:]
-		question_parts[1] = question_parts[1].split(ANSWER_SPLITTER)
-		question_parts[1][0] = question_parts[1][0].rstrip("\n")
-		question_parts[1][-1] = question_parts[1][-1].rstrip("\n")
-		first_answer = question_parts[1][0]
-		last_answer = question_parts[1][-1]
-		
-		#for first answer
-		if "(" in first_answer and ")" in first_answer:
-			parenthesis_num = first_answer[first_answer.index("(") + 1:first_answer.index(")")]
-			csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes before " + question_parts[1][1] + "?, " + first_answer + "\n")	
+		if line[-2:] == "##":
+			#TODO support multiline question
+			#keep adding event answers one line at a time
+			# until the next ##
+			pass	
 		else:
-			csv_events.write("what is the first " + question_parts[0] + " that comes before " + question_parts[1][1] + "?, " + first_answer + "\n")	
-
-		#for last answer
-		if "(" in last_answer and ")" in last_answer:
-			parenthesis_num = last_answer[last_answer.index("(") + 1:last_answer.index(")")]
-			csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes after " + question_parts[1][-2] + "?, " + last_answer + "\n")	
-		else:
-			csv_events.write("what is the last " + question_parts[0] + " that comes after " + question_parts[1][-2] + "?, " + last_answer + "\n")	
-
-		# for middle answers
-		for i in range(1, len(question_parts[1]) - 1):
-			answer = question_parts[1][i].rstrip("\n")
-			if "(" in answer and ")" in answer:
-				parenthesis_num = answer[answer.index("(") + 1:answer.index(")")]
-				csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes after " + question_parts[1][i-1] + " and before " + question_parts[1][i+1] + "?, " + answer + "\n")	
+			question_parts[0] = question_parts[0][1:]
+			question_parts[1] = question_parts[1].split(ANSWER_SPLITTER)
+			question_parts[1][0] = question_parts[1][0].rstrip("\n")
+			question_parts[1][-1] = question_parts[1][-1].rstrip("\n")
+			first_answer = question_parts[1][0]
+			last_answer = question_parts[1][-1]
+			
+			#for first answer
+			if "(" in first_answer and ")" in first_answer:
+				parenthesis_num = first_answer[first_answer.index("(") + 1:first_answer.index(")")]
+				csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes before " + question_parts[1][1] + "?, " + first_answer + "\n")	
 			else:
-				csv_events.write("what is the #" + i + " " + question_parts[0] + " that comes after " + question_parts[1][i-1] + " and before " + question_parts[1][i+1] + "?, " + answer + "\n")	
+				csv_events.write("what is the first " + question_parts[0] + " that comes before " + question_parts[1][1] + "?, " + first_answer + "\n")	
+
+			#for last answer
+			if "(" in last_answer and ")" in last_answer:
+				parenthesis_num = last_answer[last_answer.index("(") + 1:last_answer.index(")")]
+				csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes after " + question_parts[1][-2] + "?, " + last_answer + "\n")	
+			else:
+				csv_events.write("what is the last " + question_parts[0] + " that comes after " + question_parts[1][-2] + "?, " + last_answer + "\n")	
+
+			# for middle answers
+			for i in range(1, len(question_parts[1]) - 1):
+				answer = question_parts[1][i].rstrip("\n")
+				if "(" in answer and ")" in answer:
+					parenthesis_num = answer[answer.index("(") + 1:answer.index(")")]
+					csv_events.write("what is the #" + parenthesis_num + " " + question_parts[0] + " that comes after " + question_parts[1][i-1] + " and before " + question_parts[1][i+1] + "?, " + answer + "\n")	
+				else:
+					csv_events.write("what is the #" + i + " " + question_parts[0] + " that comes after " + question_parts[1][i-1] + " and before " + question_parts[1][i+1] + "?, " + answer + "\n")	
 			
 	elif line[0] == "$":
 	#residue
@@ -140,7 +152,9 @@ for line in text_lines[1:]:
 		question_parts[0] = question_parts[0].replace(",","")
 		question_parts[1] = question_parts[1].replace(",","")
 		csv_residue.write(question_parts[0] + "?, " + question_parts[1])
-
+	elif line[0:2] == "//":
+	#comment
+		pass
 	else:
 	#basic
 		question_parts[0] = question_parts[0].replace(",","")
@@ -154,4 +168,4 @@ csv_cloze.close()
 csv_events.close()
 csv_residue.close()
 
-print "done"
+print "Note-making complete. This program may now be closed."
