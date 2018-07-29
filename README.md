@@ -6,9 +6,9 @@ The front and back part of the card is determined by the '?' everything before t
 Segregation into different types of cards is based on the first character of the line.
 - no special character for [basic] cards
 - ! or (shift + 1) for [reversible] cards
-- \# or (shift + 2) for [cloze deletion] cards
-- $ or (shift + 3) for step-by-step events cards (special card types I made; explained later, not yet implemented)
-- % or (shift + 4) for residue cards (incomplete cards without an answer yet; you don't want to add those to your decks!)
+- @ or (shift + 2) for [cloze deletion] cards
+- \# or (shift + 3) for step-by-step events cards (special card types I made; explained later, not yet implemented)
+- $ or (shift + 4) for residue cards (incomplete cards without an answer yet; you don't want to add those to your decks!)
 
 -----
 
