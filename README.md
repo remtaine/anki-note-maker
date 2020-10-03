@@ -3,22 +3,24 @@ This Anki Note Maker gets a single text (.txt or no extension) file and makes th
 
 The front and back part of the card is determined by the '?' everything before the '?' is the question or front portion, everything after is the answer or back portion.
 
+The first line is for tags, the questions start at the 2nd line
+
 Segregation into different types of cards is based on the first character of the line.
 - no special character for [basic] cards
 - ! or (shift + 1) for [reversible] cards
 - @ or (shift + 2) for [cloze deletion] cards
 - \# or (shift + 3) for step-by-step events cards (special card types I made; explained later, not yet implemented)
 - $ or (shift + 4) for residue cards (incomplete cards without an answer yet; you don't want to add those to your decks!)
-
+- // are for comments
 -----
 
 This is how basic card text looks like before running the program:
-> What is the capital of X? Y 
+> What is the capital of X? Y
 
 This is what the card looks like after
 - (front) What is the capital of X?
  - (back) Y
-    
+
 -----
 
 This is how reversible card text looks like before running the program:
@@ -28,7 +30,7 @@ This is how reversible card text looks like before running the program:
 This is what the 2 cards looks like after
  - (front) What is the capital of X country?
   - (back) capital: Y
- 
+
  * (front) capital: Y
   * (back) What is the capital of X country?
 
@@ -46,7 +48,7 @@ This is what the 3 cards looks like after
 
 - (front) What are the cities found in X? A, B, _
  - (back) What are the cities found in X? A, B, C
- 
+
 -----
 
 This is how step-by-step card text looks like before running the program:
@@ -97,4 +99,3 @@ Used [dillinger.io]() to generate this Markdown document.
 [reversible]: http://ankisrs.net/docs/manual.html#reverse-cards
 [cloze deletion]: http://ankisrs.net/docs/manual.html#cloze
 [Python]: https://www.python.org/downloads/
-
