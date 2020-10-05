@@ -28,6 +28,8 @@ file_to_open = open(file_name, 'r')
 text_lines = file_to_open.readlines()
 
 file_name_mod = file_name.split("_")
+if len(file_name_mod) == 1: #ie no _ as split
+	file_name_mod = file_name.split(" ")
 file_name_mod.pop(0)
 file_name_mod = "_".join(file_name_mod)
 if "." in file_name_mod:
@@ -66,8 +68,7 @@ csv_residue.write("tags:" + text_lines[0])
 for line in text_lines[1:]:
 	if line[0:2] == "//" or line[0] == "\n": #comment or break
 		continue
-	elif line[0] == "$":
-	#residue
+	elif line[0] == "$": #residue
 	# shift + 4
 		#question_parts[0] = question_parts[0].replace(",","")
 		#question_parts[1] = question_parts[1].replace(",","")
@@ -86,16 +87,14 @@ for line in text_lines[1:]:
 		os.remove(csv_residue_name)
 		break
 
-	if line[0] == "!":
-	#reversible
+	if line[0] == "!": #reversible
 	#shift + 1
 		question_parts[0] = question_parts[0][1:]
 		question_parts[0] = question_parts[0].replace(",","")
 		question_parts[1] = question_parts[1].replace(",","")
 		csv_reversible.write(question_parts[0] + "?," + question_parts[1])
 
-	elif line[0] == "@":
-	#cloze
+	elif line[0] == "@": #cloze
 	#shift + 2
 	#TODO add a space between question and answers
 		if line[-2:] == "@@":
@@ -112,14 +111,13 @@ for line in text_lines[1:]:
 			for i in xrange (0,len(cloze_answers)):
 				x = i + 1
 				cloze_answers[i] = r"{{c" + str(x) + r"::" + cloze_answers[i] + r"}}"
-			lineup = question_parts[0] + "; " #will be Text
+			lineup = question_parts[0] + "? " #will be Text
 			for i in xrange (0,len(cloze_answers)):
 				lineup = lineup + cloze_answers[i]
 			lineup = lineup + "\n"
 			csv_cloze.write(lineup)
 
-	elif line[0] == "#":
-	#step-by-step event
+	elif line[0] == "#": #step-by-step event
 	#shift + 3
 		if line[-2:] == "##":
 			#TODO support multiline question

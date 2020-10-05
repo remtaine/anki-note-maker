@@ -1,0 +1,7 @@
+Topnotch Midterms SUBJECT_HERE
+//Tags go up there!
+
+//! or (shift + 1) for reversible cards
+//@ or (shift + 2) for cloze deletion cards
+//# or (shift + 3) for step-by-step events cards
+//$ or (shift + 4) for residue/incomplete cards
