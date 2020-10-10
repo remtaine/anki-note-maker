@@ -73,7 +73,23 @@ for line in text_lines[1:]:
 		#question_parts[0] = question_parts[0].replace(",","")
 		#question_parts[1] = question_parts[1].replace(",","")
 		#csv_residue.write(question_parts[0] + "?, " + question_parts[1])
-		csv_residue.write(line)
+
+		split_words = line.split(" ")
+		lineup = ""
+		x = 0
+		for i in xrange (len(split_words)):
+			if split_words[i][0] == "@": #ie it's a cloze word
+				x = x + 1
+				split_words[i] = split_words[i][1:] #removes @
+				split_words[i] = split_words[i].replace("_", " ") #change _ to spaces
+				split_words[i] = r"{{c" + str(x) + r"::" + split_words[i] + r"}}" #adds cloze wrapper
+			#if i != 0:
+			#	lineup[i] = " " + split_words[i]
+		for i in xrange (len(split_words)):
+			lineup = lineup + split_words[i] + " "
+		#lineup = lineup + "\n"
+			#csv_cloze.write(lineup)
+		csv_cloze.write(lineup[1:])
 		continue
 
 	question_parts = line.split('?')
@@ -111,9 +127,9 @@ for line in text_lines[1:]:
 			for i in xrange (0,len(cloze_answers)):
 				x = i + 1
 				cloze_answers[i] = r"{{c" + str(x) + r"::" + cloze_answers[i] + r"}}"
-			lineup = question_parts[0] + "? " #will be Text
+			lineup = question_parts[0] + "? <br> <br>" #will be Text
 			for i in xrange (0,len(cloze_answers)):
-				lineup = lineup + cloze_answers[i]
+				lineup = lineup + cloze_answers[i] + "<br>"
 			lineup = lineup + "\n"
 			csv_cloze.write(lineup)
 
