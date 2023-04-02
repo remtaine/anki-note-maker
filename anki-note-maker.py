@@ -21,7 +21,7 @@ today = time.strftime("%Y-%m-%d")
 if len(args) == 2:
 	file_name = args[1];
 else:
-	file_name = raw_input("What should be opened? ")
+	file_name = input("What should be opened? ")
 
 file_to_open = open(file_name, 'r')
 
@@ -77,7 +77,7 @@ for line in text_lines[1:]:
 		split_words = line.split(" ")
 		lineup = ""
 		x = 0
-		for i in xrange (len(split_words)):
+		for i in range (len(split_words)):
 			if split_words[i][0] == "@": #ie it's a cloze word
 				x = x + 1
 				split_words[i] = split_words[i][1:] #removes @
@@ -85,7 +85,7 @@ for line in text_lines[1:]:
 				split_words[i] = r"{{c" + str(x) + r"::" + split_words[i] + r"}}" #adds cloze wrapper
 			#if i != 0:
 			#	lineup[i] = " " + split_words[i]
-		for i in xrange (len(split_words)):
+		for i in range (len(split_words)):
 			lineup = lineup + split_words[i] + " "
 		#lineup = lineup + "\n"
 			#csv_cloze.write(lineup)
@@ -94,8 +94,8 @@ for line in text_lines[1:]:
 
 	question_parts = line.split('?')
 	if len(question_parts) != 2:
-		print "ERROR: no '?' to signal question and answer. Aborting conversion."
-		print "Error-containing question: " + str(question_parts)
+		print ("ERROR: no '?' to signal question and answer. Aborting conversion.")
+		print ("Error-containing question: " + str(question_parts))
 		os.remove(csv_basic_name)
 		os.remove(csv_reversible_name)
 		os.remove(csv_cloze_name)
@@ -124,11 +124,11 @@ for line in text_lines[1:]:
 			#cloze deletion needs special shiz
 			cloze_answers = question_parts[1].split(ANSWER_SPLITTER)
 			cloze_answers[-1] = cloze_answers[-1].rstrip()
-			for i in xrange (0,len(cloze_answers)):
+			for i in range (0,len(cloze_answers)):
 				x = i + 1
 				cloze_answers[i] = r"{{c" + str(x) + r"::" + cloze_answers[i] + r"}}"
 			lineup = question_parts[0] + "? <br> <br>" #will be Text
-			for i in xrange (0,len(cloze_answers)):
+			for i in range (0,len(cloze_answers)):
 				lineup = lineup + cloze_answers[i] + "<br>"
 			lineup = lineup + "\n"
 			csv_cloze.write(lineup)
@@ -183,4 +183,4 @@ csv_cloze.close()
 csv_events.close()
 csv_residue.close()
 
-print "Note-making complete. This program may now be closed."
+print ("Note-making complete. This program may now be closed.")
